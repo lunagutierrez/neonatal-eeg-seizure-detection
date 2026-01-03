@@ -11,8 +11,7 @@ The dataset available at: [Zenodo Dataset](https://zenodo.org/records/4940267) i
 - Raw EEG files in **EDF format**  
 - Annotation files in **CSV format**  
 
-
-In this repository, the raw data is stored in `data/raw/`
+In this repository, the raw data (not including the edf files due to size) is stored in `data/raw/`
 
 **Installation**:
 Install the required Python packages via pip:
