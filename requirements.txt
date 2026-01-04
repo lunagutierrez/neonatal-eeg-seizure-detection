@@ -15,4 +15,13 @@ keras>=2.14
 # Visualization
 matplotlib>=3.8
 seaborn>=0.12
-plotly>=6.9
+plotly
+torch
+torchvision
+torchaudio
+tqdm
+seaborn
+pyedflib
+h5py
+jupyter
+ipykernel
