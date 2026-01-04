@@ -21,7 +21,8 @@ torchvision
 torchaudio
 tqdm
 seaborn
-pyedflib
+#pyedflib
 h5py
 jupyter
 ipykernel
+
