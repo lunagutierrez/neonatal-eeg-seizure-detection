@@ -8,18 +8,11 @@ This project implements a pipeline to preprocess neonatal EEG data, segment it i
 
 ---
 
-The dataset available at: [Zenodo Dataset](https://zenodo.org/records/4940267) includes:  
+The dataset is available at: [Zenodo Dataset](https://zenodo.org/records/4940267) includes:  
 - Raw EEG files in **EDF format**  
 - Annotation files in **CSV format**  
 
-This repository does not contain the edf files due to their size. 
-
-**Installation**:
-Install the required Python packages via pip:
-
-```bash
-pip install -r requirements.txt
-```
+This repository does not contain the edf files' folder due to their size. 
 
 ## Directory Structure
 
