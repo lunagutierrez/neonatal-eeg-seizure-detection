@@ -23,15 +23,7 @@ def main():
         logger.info(f"=== Starting Expert: {expert} ===")
 
         # 1. Set per-expert input folder
-        if expert == "A":
-            expert_input_dir = INPUT_DIR / "results_expert_A"
-        elif expert == "B":
-            expert_input_dir = INPUT_DIR / "results_expert_B"
-        elif expert == "C":
-            expert_input_dir = INPUT_DIR / "results_expert_C"
-        else:
-            raise ValueError(f"Unknown expert: {expert}")
-
+        expert_input_dir = INPUT_DIR / f"results_expert_{expert}"
         # 2. Prepare expert output folder
         expert_out_dir = OUTPUT_DIR / expert
         expert_out_dir.mkdir(parents=True, exist_ok=True)
@@ -50,10 +42,10 @@ def main():
                     # Construct filename for this expert, window, chunk, and frequency
                     fname = expert_input_dir / make_data_filename(expert, w, c, FREQS)
                     raw_data = load_hdf5_data(fname) # Load EEG from HDF5 file
-
                     # 2. Data Processing
                     logger.info("Phase 2/3: Processing & segmenting")
                     x, y = process_and_segment(raw_data, w * FREQS) # Segment raw data into windows and extract labels
+                    
                     if x is None:
                         logger.warning("No windows generated, skipping")
                         continue
@@ -62,25 +54,29 @@ def main():
 
                     # 3. Modeling
                     logger.info("Phase 3/3: K-fold training")
-                    avg_acc = run_kfold_experiment(x, y) # Run K-Fold experiment and get average accuracy
-                    results.at[w, c] = f"{avg_acc*100:.1f}%" # Store result as % in df
+                    avg_metrics = run_kfold_experiment(
+                        x, y, expert=expert, window=w, chunk=c, out_dir=expert_out_dir
+                    )
+
+                    results.at[w, c] = f"{avg_metrics['accuracy']*100:.1f}%"
 
                     elapsed = time.time() - start_time
                     logger.info(
-                        f"[DONE] Expert={expert} | W={w}s | C={c} | Acc={avg_acc:.2f} | Time={elapsed/60:.1f} min"
+                        f"[DONE] Expert={expert} | W={w}s | C={c} | "
+                        f"Avg Acc={avg_metrics['accuracy']:.3f} | "
+                        f"Time={elapsed/60:.1f} min"
                     )
 
-                    # Save intermediate results per expert
-                    results_file = expert_out_dir / f"results_W{w}_C{c}.csv" # We're doing this to avoid data loss when connections drop
+                    # Save intermediate average metrics CSV
+                    results_file = expert_out_dir / f"results_W{w}_C{c}.csv"
                     results.to_csv(results_file)
 
-                except Exception: # Catch and log any errors without stopping the pipeline
+                except Exception:
                     logger.exception(f"[FAILED] Expert={expert} | W={w}s | C={c}")
 
         logger.info(f"=== Finished Expert: {expert} ===")
-        logger.info("Experiment results:")
+        logger.info("Average accuracy per window/chunk:")
         print(results)
-
 
 if __name__ == "__main__":
     main()

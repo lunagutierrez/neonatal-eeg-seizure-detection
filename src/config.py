@@ -9,14 +9,14 @@ OUTPUT_DIR = WORKING_DIR / "outputs"
 INPUT_DIR = WORKING_DIR / "inputs"
 
 # Paper parameters
-EXPERTS = ["A", "B", "C"]
-WINDOWS = [1, 2, 5]
+EXPERTS = ["A", "C"]
+WINDOWS = [1,2,5]
 CHUNKS = [1, 2, 5, 10, 20]
 
 # Training parameters
 EPOCHS = 50
 BATCH_SIZE = 16
-LEARNING_RATE = 1e-2
+LEARNING_RATE = 0.1
 KFOLDS = 5
 SEED = 1024
 
@@ -27,3 +27,4 @@ NO_OF_EEG_CHANNELS = 18
 SEIZURE_INDICATOR = 20
 FREQS = 64
 COMPLETE_CALCULATIONS = False
+

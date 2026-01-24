@@ -21,7 +21,7 @@ def load_hdf5_data(file_name: str) -> np.ndarray:
         raise FileNotFoundError(f"EEG file not found: {data_path}")
 
     with h5py.File(data_path, "r") as file_h5:
-        temp = np.array(file_h5["FINAL_mtx"])
+        temp = np.array(file_h5["FINAL.mtx"])
     
     # Ensure (Samples, Channels) orientation
     # Some datasets might have shape (Channels, Samples), so we transpose if needed
