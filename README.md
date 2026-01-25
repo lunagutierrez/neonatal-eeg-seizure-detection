@@ -144,5 +144,16 @@ OUTPUT_DIR = Path("outputs")
 * Epoch-level metrics include both training and validation sets.
 * HDF5 files must be present before CNN training. Missing files will cause `main_mult.py` to skip that window/chunk.
 * All logs are stored using `logger.py`, printed to console for tracking.
+* At least for the training section of the project, we suggest using Kaggle or Colab to access their high performance computing power (GPU). For this, the same folder structure must be maintained. For Colab, create a notebook that contains and runs the following:
+* 
+```bash
+import os
+from google.colab import drive
+drive.mount("/content/drive")
 
+PROJECT_PATH = "/content/drive/MyDrive/neonatal_eeg"
+os.chdir(PROJECT_PATH)
+
+!python main_mult.py
+```
 ---
