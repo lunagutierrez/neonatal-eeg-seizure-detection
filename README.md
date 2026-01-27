@@ -48,6 +48,11 @@ BASE_DIR/
 │   ├── engine.py             # Training / K-fold evaluation
 │   ├── processor.py          # Preprocessing & windowing functions
 │   ├── evaluation.py         # Model evaluation metrics
+├── tests/                    # Unit and integration tests
+│   ├── __init__.py           # Makes the directory a Python package
+│   ├── conftest.py           # Shared fixtures and plugins for pytest
+│   ├── test_pipeline.py      # Tests for the end-to-end experiment flow
+│   └── test_preprocessing.py # Tests for preprocessing scripts and windowing
 ```
 
 > Note: `working/inputs` **must exist** before writing HDF5 files, or the code will automatically create it.
